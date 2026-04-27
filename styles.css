@@ -124,7 +124,7 @@ body {
     gap: 28px;
 }
 
-/* === SIDEBAR === */
+/* === SIDEBAR (ESCRITORIO) === */
 .sidebar {
     position: sticky;
     top: 28px;
@@ -189,7 +189,7 @@ body {
     flex: 1;
 }
 
-/* --- BOTONES DE NAVEGACIÓN MEJORADOS --- */
+/* --- BOTONES DE NAVEGACIÓN (ESCRITORIO) --- */
 .nav-btn {
     width: 100%;
     display: flex;
@@ -198,7 +198,6 @@ body {
     padding: 12px 14px;
     background: transparent;
     color: #b0b8cc;
-    /* texto más claro, legible sobre fondo oscuro */
     text-align: left;
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
@@ -227,14 +226,12 @@ body {
     opacity: 1;
 }
 
-/* Estado activo: estilo botón primario con gradiente y texto oscuro */
 .nav-btn.active {
     background: linear-gradient(135deg, #00e5ff, #76ff03);
     color: #08080f;
     border: 0;
     font-weight: 700;
     box-shadow: 0 8px 20px rgba(0, 229, 255, 0.3);
-    text-shadow: none;
 }
 
 .nav-btn.active svg {
@@ -243,7 +240,6 @@ body {
     stroke: #08080f;
 }
 
-/* Ocultamos la barra izquierda porque el botón ya es muy visible */
 .nav-btn.active::after {
     display: none;
 }
@@ -492,11 +488,6 @@ button:hover {
 button:active {
     transform: translateY(0);
     box-shadow: 0 6px 16px rgba(0, 229, 255, 0.2);
-}
-
-button span {
-    position: relative;
-    z-index: 1;
 }
 
 /* === STATS === */
@@ -872,39 +863,65 @@ tbody tr:hover {
     }
 }
 
-/* === RESPONSIVE === */
+/* ============================================
+   RESPONSIVE · EXPERIENCIA MÓVIL PROFESIONAL
+   ============================================ */
+
+/* Tablet y móvil: menú superior sticky */
 @media (max-width: 1024px) {
     .app {
         grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 16px 0;
+        gap: 0;
+        width: 100%;
+        padding: 0;
     }
 
+    /* Sidebar se convierte en barra de navegación superior fija */
     .sidebar {
-        position: static;
+        position: sticky;
+        top: 0;
+        z-index: 100;
         height: auto;
+        min-height: unset;
+        border-radius: 0;
+        background: rgba(10, 10, 18, 0.9);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        padding: 10px 16px;
         flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 14px;
-        border-radius: var(--radius);
+        align-items: center;
+        gap: 0;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .sidebar::-webkit-scrollbar {
+        display: none;
     }
 
     .sidebar-header {
-        width: 100%;
+        display: none;
+        /* ocultamos logo en móvil para ganar espacio */
     }
 
     .sidebar-nav {
         flex-direction: row;
-        flex-wrap: wrap;
-        gap: 6px;
-        flex: 0;
+        flex-wrap: nowrap;
+        gap: 8px;
+        flex: 1;
     }
 
     .nav-btn {
         width: auto;
-        padding: 10px 14px;
+        padding: 8px 14px;
         font-size: 12px;
+        gap: 6px;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 
     .nav-btn svg {
@@ -917,11 +934,16 @@ tbody tr:hover {
     }
 
     .sidebar-footer {
-        width: 100%;
+        display: none;
+    }
+
+    .content {
+        padding: 20px 16px 40px;
     }
 
     .stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
     .stats-advanced {
@@ -931,12 +953,20 @@ tbody tr:hover {
     .summary-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
 
-@media (max-width: 650px) {
+    .wide-form {
+        grid-template-columns: 1fr;
+    }
+
+    .wide-form button {
+        grid-column: span 1;
+    }
+
     .hero {
         flex-direction: column;
+        align-items: flex-start;
         gap: 14px;
+        margin-bottom: 20px;
     }
 
     .hero-icon {
@@ -945,27 +975,84 @@ tbody tr:hover {
     }
 
     h1 {
-        font-size: 32px;
+        font-size: 36px;
     }
 
-    .wide-form,
+    .card {
+        padding: 20px;
+    }
+}
+
+/* Móvil pequeño: más compacto */
+@media (max-width: 600px) {
+    .content {
+        padding: 16px 12px 32px;
+    }
+
+    .nav-btn {
+        padding: 7px 12px;
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .nav-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .hero {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .hero-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 13px;
+    }
+
+    .eyebrow {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+
+    .card {
+        padding: 16px;
+        border-radius: var(--radius);
+    }
+
+    .card-header h2 {
+        font-size: 18px;
+    }
+
     .stats,
     .stats-advanced,
     .summary-grid {
         grid-template-columns: 1fr;
+        gap: 10px;
     }
 
-    .sidebar-nav {
-        flex-direction: column;
-        width: 100%;
+    .stat {
+        padding: 16px;
     }
 
-    .nav-btn {
-        width: 100%;
+    .stat strong {
+        font-size: 22px;
     }
 
-    .card {
-        padding: 18px;
+    .stat span {
+        font-size: 11px;
+    }
+
+    .summary-item strong {
+        font-size: 18px;
     }
 
     table {
@@ -976,5 +1063,17 @@ tbody tr:hover {
     td {
         padding: 10px 8px;
         font-size: 11px;
+    }
+
+    .toast {
+        min-width: auto;
+        max-width: 90vw;
+    }
+
+    .toast-container {
+        top: auto;
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
     }
 }
